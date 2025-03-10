@@ -1,0 +1,7 @@
+sudah saya beri komen di testdebug.html dan saya benarkan sehingga bisa di run
+kesimpulan error:
+- line 22 : error tidak ada koma setelah object
+- line 442 : error kurang petik 442
+- line 451 : error valueAsString line 451 tidak diisi atau tidak ada valuenya
+- line 538 : error typo harusnya tanpa s diakhir attribute 
+- line 548 : error tidak ada index di cleanA

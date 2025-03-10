@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      function changeLabel() {
+        document.getElementById("label").textContent = "Effendi Prakoso";
+      }
+
+      async function fetchData() {
+        try {
+          const response = await fetch(
+            "http://jsonplaceholder.typicode.com/posts"
+          );
+          const data = await response.json();
+          console.log(data);
+          data.forEach((item) => delete item.id); // delete key id
+          displayData(data.slice(0, 10));
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+
+      function displayData(data) {
+        const table = document.getElementById("data-table");
+        data.forEach((item) => {
+          const row = table.insertRow();
+          const cell1 = row.insertCell(0);
+          const cell2 = row.insertCell(1);
+          const cell3 = row.insertCell(2);
+          const cell4 = row.insertCell(3);
+          cell1.textContent = item.id;
+          cell2.textContent = item.title;
+          cell3.textContent = item.body;
+          cell4.innerHTML = `<button onclick="deleteRow(this)">Delete</button>`;
+        });
+      }
+
+      function deleteRow(button) {
+        const row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+      }
+
+      async function hashString() {
+        const text = "11032025fendi+pria+ifabula";
+        const encoder = new TextEncoder();
+        const data = encoder.encode(text);
+        const hash = await crypto.subtle.digest("SHA-256", data);
+        const hashArray = Array.from(new Uint8Array(hash));
+        const hashHex = hashArray
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("");
+        console.log(hashHex);
+      }
+
+      window.onload = () => {
+        fetchData();
+        hashString();
+      };
+    </script>
+  </head>
+  <body>
+    <label id="label">John Doe</label>
+    <button onclick="changeLabel()">Change Label</button>
+    <table id="data-table" border="1">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Body</th>
+        <th>Action</th>
+      </tr>
+    </table>
+  </body>
+</html>
